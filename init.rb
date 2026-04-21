@@ -45,7 +45,8 @@ module RedmineAssignToMeButton
 
       data = {
         :url => "/issues/#{issue.id}/assign_to_me_button",
-        :token => c.send(:form_authenticity_token)
+        :token => c.send(:form_authenticity_token),
+        :label => I18n.t(:label_assign_to_me)
       }
 
       c.helpers.javascript_include_tag("assign_to_me_button", :plugin => "redmine_assign_to_me_button") +

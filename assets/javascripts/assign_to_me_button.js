@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function() {
     var link = document.createElement("a");
     link.href = "#";
     link.className = "icon icon-user assign-to-me-link";
-    link.textContent = "Assign to me";
+    link.textContent = window.redmineAssignToMeButton.label;
 
     link.addEventListener("click", function(event) {
       event.preventDefault();
