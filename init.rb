@@ -43,14 +43,28 @@ module RedmineAssignToMeButton
       return "" unless issue.assignable_users.include?(User.current)
       return "" if issue.assigned_to_id == User.current.id
 
-      data = {
-        :url => "/issues/#{issue.id}/assign_to_me_button",
-        :token => c.send(:form_authenticity_token),
-        :label => I18n.t(:label_assign_to_me)
-      }
+      h = c.helpers
 
-      c.helpers.javascript_include_tag("assign_to_me_button", :plugin => "redmine_assign_to_me_button") +
-        "<script>window.redmineAssignToMeButton=#{data.to_json}</script>".html_safe
+      url = "/issues/#{issue.id}/assign_to_me_button"
+
+      link = h.link_to(
+        h.sprite_icon("user", I18n.t(:label_assign_to_me)),
+        "#",
+        :class => "icon icon-user assign-to-me-link",
+        :data => {
+          :url => url,
+          :token => c.send(:form_authenticity_token)
+        }
+      )
+
+      template = h.content_tag(
+        :template,
+        link,
+        :id => "assign-to-me-link-template"
+      )
+
+      h.javascript_include_tag("assign_to_me_button", :plugin => "redmine_assign_to_me_button") +
+        template
     end
   end
 end
